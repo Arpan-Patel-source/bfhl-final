@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.HashMap;
+import java.util.Map;
 @RestController
 @RequestMapping("/bfhl")
 public class BfhlController {
@@ -29,4 +31,14 @@ public class BfhlController {
     public ResponseEntity<BfhlResponse> processData(@Valid @RequestBody BfhlRequest request) {
         return ResponseEntity.ok(bfhlService.processData(request));
     }
+    @GetMapping("/health")
+public ResponseEntity<?> health() {
+
+    Map<String, Object> response = new HashMap<>();
+
+    response.put("status", "running");
+    response.put("message", "BFHL API is live (GET)");
+
+    return ResponseEntity.ok(response);
+}
 }
