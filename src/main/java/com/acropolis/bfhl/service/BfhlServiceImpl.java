@@ -65,10 +65,6 @@ public class BfhlServiceImpl implements BfhlService {
                 .concatString(alternatingCapsReversed(allAlphas.toString()))
                 .build();
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /** True when the entire token parses as a long integer. */
     private boolean isNumeric(String token) {
         if (token == null || token.isEmpty()) return false;
         try {
@@ -79,7 +75,6 @@ public class BfhlServiceImpl implements BfhlService {
         }
     }
 
-    /** True when every character in the token is a letter (a-z / A-Z). */
     private boolean isAlpha(String token) {
         if (token == null || token.isEmpty()) return false;
         for (char c : token.toCharArray()) {
@@ -88,17 +83,6 @@ public class BfhlServiceImpl implements BfhlService {
         return true;
     }
 
-    /**
-     * Builds the concat_string:
-     *   1. Take all alpha chars already concatenated & uppercased  →  e.g. "AYB"
-     *   2. Reverse                                                 →  "BYA"
-     *   3. Alternating caps (even index = upper, odd = lower)      →  "ByA"
-     *
-     * Examples from the spec:
-     *   ["a","R"]        → "AR" → "RA" → "Ra"
-     *   ["a","y","b"]    → "AYB" → "BYA" → "ByA"
-     *   ["A","ABCD","DOE"] → "AABCDDOE" → "EODDCBAA" → "EoDdCbAa"
-     */
     private String alternatingCapsReversed(String allAlphas) {
         if (allAlphas == null || allAlphas.isEmpty()) return "";
         String reversed = new StringBuilder(allAlphas).reverse().toString();
