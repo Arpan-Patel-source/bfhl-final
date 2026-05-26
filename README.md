@@ -2,7 +2,7 @@
 
 REST API built with Java 17 + Spring Boot 3.  
 **POST /bfhl** — processes an array of strings and returns categorized results.
-
+**GET /health** — shows status code, if the service is running or not.
 
 ## API Reference
 
