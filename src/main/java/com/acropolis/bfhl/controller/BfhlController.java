@@ -4,16 +4,17 @@ import com.acropolis.bfhl.dto.BfhlRequest;
 import com.acropolis.bfhl.dto.BfhlResponse;
 import com.acropolis.bfhl.service.BfhlService;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-@RequestMapping("/bfhl")
 public class BfhlController {
 
     private final BfhlService bfhlService;
@@ -23,22 +24,30 @@ public class BfhlController {
     }
 
     /**
-     * POST /bfhl
-     * Accepts { "data": [...] } and returns the processed result.
-     * Returns HTTP 200 on success, 400 on bad input.
+     * GET /health
+     * Health check endpoint
      */
-    @PostMapping
-    public ResponseEntity<BfhlResponse> processData(@Valid @RequestBody BfhlRequest request) {
-        return ResponseEntity.ok(bfhlService.processData(request));
-    }
     @GetMapping("/health")
-public ResponseEntity<?> health() {
+    public ResponseEntity<?> health() {
 
-    Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
 
-    response.put("status", "running");
-    response.put("message", "BFHL API is live (GET)");
+        response.put("status", "running");
+        response.put("message", "BFHL API is live");
 
-    return ResponseEntity.ok(response);
-}
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * POST /bfhl
+     * Main API endpoint
+     */
+    @PostMapping("/bfhl")
+    public ResponseEntity<BfhlResponse> processData(
+            @Valid @RequestBody BfhlRequest request) {
+
+        return ResponseEntity.ok(
+                bfhlService.processData(request)
+        );
+    }
 }
